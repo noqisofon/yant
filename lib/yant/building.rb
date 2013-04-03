@@ -1,9 +1,9 @@
 # -*- coding: utf-8; -*-
-require 'yant/entity'
+require 'yant/file_node'
 require 'yant/dependency'
 
 
-class Yant::Product < Yant::Entity
+class Yant::Product < Yant::FileNode
   @@default_options = {
     :output_dir => "./bin",
     :output_type => :unknown

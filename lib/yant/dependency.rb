@@ -1,5 +1,5 @@
 # -*- coding: utf-8; -*-
-require 'yant/entity'
+require 'yant/file_node'
 
 
 class Yant::Dependency
@@ -9,7 +9,7 @@ class Yant::Dependency
   def initialize(product, options = {})
     @product = product
     @options = options
-    @entities = []
+    @files = []
   end
 
   #
@@ -23,33 +23,34 @@ class Yant::Dependency
   #
   #
   def size
-    @entities.size
+    @files.size
   end
 
   #
   #
   #
-  def <<(entity)
-    # entity が Yant::Entity クラスのオブジェクトではない場合は
-    # Yant::Entity にして追加します。
-    entity = Yant::Entity.new entity unless
-      entity.class == Yant::Entity
-    @entities.push entity
+  def <<(file_node)
+    # file_node が Yant::FileNode クラスのオブジェクトではない場合は
+    # Yant::FileNode にして追加します。
+    file_node = Yant::FileNode.new file_node unless
+      file_node.class == Yant::FileNode
+    # TODO: 重複は build.yml を読み込むクラスでする。
+    @files.push file_node
   end
 
   #
   #
   #
-  def outdate_entities(always_outdate = false)
+  def outdate_files(always_outdate = false)
     # プロダクトが存在しない(ビルドされていない)場合は依存関係の
-    # エンティティ全てを返します。
-    # また、always_outdate が真の場合もエンティティ全てを返します。
-    return @entities if not @product.exist? or always_outdate
+    # ファイル全てを返します。
+    # また、always_outdate が真の場合もファイル全てを返します。
+    return @files if not @product.exist? or always_outdate
 
     product_modify_time = @product.modify_time
 
-    return @entities.select { |entity|
-      entity.modify_time > product_modify_date
+    return @files.select { |file_node|
+      file_node.modify_time > product_modify_date
     }
   end
 end
