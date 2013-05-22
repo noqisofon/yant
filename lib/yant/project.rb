@@ -100,17 +100,12 @@ class Yant::Project
   end
 
   # ターゲットを追加します。
-  # @param [String] name ターゲットの名前。
-  # @param [Target] target 追加したいターゲット。
   #
-  # @return [self] self を返します。
-  def add_target(name, target)
-    @targets[name] = target
-
-    self
-  end
-  # ターゲットを追加します。
-  # @param [Target] target 追加したいターゲット。
+  # @overload add_target(target)
+  #   @param [Target] target 追加したいターゲット。
+  # @overload add_target(name, target)
+  #   @param [String] name ターゲットの名前。
+  #   @param [Target] target 追加したいターゲット。
   #
   # @return [self] self を返します。
   def add_target(target)
@@ -118,8 +113,13 @@ class Yant::Project
 
     self
   end
+  def add_target(name, target)
+    @targets[name] = target
 
-  # ビルドリスターを追加します。
+    self
+  end
+
+  # ビルドリスナーを追加します。
   #
   # @return [self] self を返します。
   def add_build_listener(listener)

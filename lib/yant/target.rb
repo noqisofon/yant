@@ -16,14 +16,17 @@ class Yant::Target
   attr_accessor :location
   attr_accessor :project
 
+  # 新しいターゲットオブジェクトを作成します。
+  #
+  # @return [Target]
   def initialize
     @dependencies = []
     @tasks        = []
   end
 
+  # レシーバに依存する全てのオブジェクトを返します。
   #
-  #
-  #
+  # @return [Array<String>] レシーバに依存する全てのオブジェクト。
   def dependencies
     @dependencies
   end
@@ -35,28 +38,34 @@ class Yant::Target
     @tasks
   end
 
+  # レシーバに依存するものを追加します。
   #
+  # @param [String] dependency 依存するファイルか何かの名前。
   #
-  #
+  # @return [self] self を返します。
   def add_dependency(dependency)
     @dependencies.push dependency
 
-    nil
+    self
   end
 
+  # other がレシーバに追加されていれば真を返します。
   #
+  # @param (see #add_dependency)
   #
-  #
-  def depend_on(other)
+  # @return [true, false]
+  def depend_on(other_dependency)
     @dependencies.include? other
   end
 
+  # タスクを追加します。
   #
+  # @param [Task] task 追加するタスク。
   #
-  #
+  # @return [self] self を返します。
   def add_task(task)
     @tasks.push task
 
-    nil
+    self
   end
 end
