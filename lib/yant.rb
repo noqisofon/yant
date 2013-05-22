@@ -1,5 +1,6 @@
 # -*- coding: utf-8; -*-
 require 'yant/version'
+require 'yant/project'
 
 
 module Yant

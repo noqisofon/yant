@@ -4,3 +4,10 @@
 *~
 \#*#
 
+# Document directory
+/doc
+
+# Yard directory
+/.yardoc
+
+
