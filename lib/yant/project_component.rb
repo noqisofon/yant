@@ -1,15 +1,21 @@
+# -*- coding: utf-8; -*-
 require './yant'
 
 
 class Yant::ProjectComponent
-  attr_accessor :description, :location, :project
+  # @return [String] このプロジェクト構成物の説明。
+  attr_accessor :description
+  # @return [Location] ろけーしょん。
+  attr_accessor :location
+  # @return [Project] 所属しているプロジェクト。
+  attr_accessor :project
 
   #
   #
   #
-  def initialize(a_description = "", a_location ="", a_project = nil)
-    self.description = a_description
-    self.location = a_location
-    self.project = a_project
+  def initialize(description = "", location ="", project = nil)
+    self.description = description
+    self.location = location
+    self.project = project
   end
 end

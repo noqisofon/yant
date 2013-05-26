@@ -14,6 +14,7 @@ class Yant::Target
   attr_accessor :description
   # @return [Location]
   attr_accessor :location
+  # @return [Project] プロジェクト。
   attr_accessor :project
 
   # 新しいターゲットオブジェクトを作成します。
@@ -31,9 +32,9 @@ class Yant::Target
     @dependencies
   end
 
+  # ビルド対象に含まれている全てのタスクを返します。
   #
-  #
-  #
+  # @return [Array<Task>] ビルド対象に含まれている全てのタスク。
   def tasks
     @tasks
   end

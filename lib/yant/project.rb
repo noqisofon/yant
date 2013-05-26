@@ -34,7 +34,7 @@ class Yant::Project
   # プロジェクトの名前、概要、親プロジェクト、ベースディレクトリなどなどを指定してプロジェクトオブジェクトを作成します。
   #
   # @param [String]                   name プロジェクトの名前。
-  # @param [String]             descrption プロジェクトの説明。
+  # @param [String]            description プロジェクトの説明。
   # @param [nil, Project]   parent_project このプロジェクトの親。
   # @param [String]               base_dir プロジェクトのベースディレクトリ。
   # @param [nil, Task]             default デフォルトで実行するタスク、またはタスクの名前。
@@ -121,6 +121,10 @@ class Yant::Project
 
   # ビルドリスナーを追加します。
   #
+  # @note 引数の listener は、BuildListener のメソッドが定義さえされていればどんなオブジェクトでも追加できます。
+  #
+  # @param [Object, BuildListener] listener 追加したいビルドリスナー。
+  #
   # @return [self] self を返します。
   def add_build_listener(listener)
     @build_listeners.push listener unless
@@ -130,6 +134,7 @@ class Yant::Project
   end
 
   # 指定されたビルドリスナーを削除します。
+  #
   # @param [BuildListener] listener 削除したいビルドリスナー。
   #
   # @return [BuildListener] 削除されたビルドリスナーを返します。

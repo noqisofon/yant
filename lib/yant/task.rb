@@ -6,7 +6,7 @@ require 'yant/target'
 
 # 全てのタスクのための基底クラスです。
 # @abstract
-# @auther ned rihine
+# @author ned rihine
 class Yant::Task < ProjectComponent
   # @return [Target] タスクが持っているビルド対象。
   attr_accessor :owning_target
@@ -20,7 +20,9 @@ class Yant::Task < ProjectComponent
   # 新しくタスクオブジェクトを作成します。
   #
   # @return [Task] 新しいタスクオブジェクト。
-  def initialize()
+  def initialize(name = "", target = nil)
+    self.name = name
+    self.owning_target = target
   end
 
   # タスクを実行します。
@@ -42,6 +44,8 @@ class Yant::Task < ProjectComponent
   end
 
   # レシーバと別のタスクを結びつけます。
+  #
+  # @param [Task] other_task 結び付けたいタスク。
   #
   # @note 別のタスクを代表して動くために新しく作成されたタスクを構成する場合に呼び出します。
   def bind_to_owner(other_task)
