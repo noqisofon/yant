@@ -2,6 +2,7 @@
 require 'yant'
 require 'yant/project'
 retuire 'yant/location'
+require 'yant/dependency_set'
 
 
 # ビルド対象を表します。
@@ -21,7 +22,7 @@ class Yant::Target
   #
   # @return [Target]
   def initialize
-    @dependencies = []
+    @dependencies = DependencySet.new
     @tasks        = []
   end
 
@@ -29,7 +30,7 @@ class Yant::Target
   #
   # @return [Array<String>] レシーバに依存する全てのオブジェクト。
   def dependencies
-    @dependencies
+    @dependencies.to_a
   end
 
   # ビルド対象に含まれている全てのタスクを返します。
@@ -45,18 +46,9 @@ class Yant::Target
   #
   # @return [self] self を返します。
   def add_dependency(dependency)
-    @dependencies.push dependency
+    @dependencies.add dependency
 
     self
-  end
-
-  # other がレシーバに追加されていれば真を返します。
-  #
-  # @param (see #add_dependency)
-  #
-  # @return [true, false]
-  def depend_on(other_dependency)
-    @dependencies.include? other
   end
 
   # タスクを追加します。
@@ -65,7 +57,28 @@ class Yant::Target
   #
   # @return [self] self を返します。
   def add_task(task)
-    @tasks.push task
+    task.target = target
+    @tasks << task
+
+    self
+  end
+
+  # other_dependency がレシーバに追加されていれば真を返します。
+  #
+  # @param (see #add_dependency)
+  #
+  # @return [true, false] レシーバに追加されていれば真。
+  def depend_on(other_dependency)
+    @dependencies.include? other
+  end
+
+  #
+  #
+  # @return [self] self を返します。
+  def perform
+    @tasks.each do |task|
+      task.execute
+    end
 
     self
   end

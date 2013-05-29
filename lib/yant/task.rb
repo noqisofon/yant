@@ -19,27 +19,37 @@ class Yant::Task < ProjectComponent
 
   # 新しくタスクオブジェクトを作成します。
   #
+  # @param [String] name    タスクの名前。
+  # @param [Target] target  タスクに持たせたいビルド対象。
+  # @param [Symbol] type    タスクの種類。
+  #
   # @return [Task] 新しいタスクオブジェクト。
-  def initialize(name = "", target = nil)
-    self.name = name
+  def initialize(name = "", target = nil, type = :unknown)
+    self.name          = name
     self.owning_target = target
+    self.type          = type
+
+    @valid = false
   end
 
   # タスクを実行します。
   #
-  #
+  # @return [self] self を返します。
   def execute
+    maybe_configure if invalid?
+
+    
   end
 
   # タスクがまだ構成されていない場合、構成します。
   #
-  #
+  # @return [self] self を返します。
   def maybe_configure
   end
 
   # タスクを再構成します。
   #
-  #
+  # @return [self] self を返します。
   def reconfigure
   end
 
@@ -56,11 +66,13 @@ class Yant::Task < ProjectComponent
   #
   #
   def invalid?
+    not @valid
   end
 
   #
   #
   #
   def valid?
+    @valid
   end
 end

@@ -1,11 +1,18 @@
 # -*- coding: utf-8; -*-
 require 'yant'
+require 'yant/project'
 
 
 #
 #
 #
 class Yant::Application
+
+  @@default_options = {
+    :output_dir => '.',
+    :tmp_dir    => '.',
+    
+  }
 
   #
   #
@@ -19,12 +26,15 @@ class Yant::Application
   #
   #
   def start
+    @projects.each do |project|
+      project.execute_tasks
+    end
   end
 
   #
   #
   #
-  def self.main
+  def self.main(args)
     progn = Application.new
 
     # カレントディレクトリにある、

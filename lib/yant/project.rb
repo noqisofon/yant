@@ -1,9 +1,10 @@
 # -*- coding: utf-8; -*-
 require 'yant'
-require 'yant/build_task'
 require 'yant/executor'
 require 'yant/filter_set'
 require 'yant/task'
+require 'yant/tasks/cc'
+require 'yant/tasks/copy'
 
 
 #
@@ -41,7 +42,7 @@ class Yant::Project
   # @param [nil, Executor]        executor このプロジェクトを実行するためのエグゼキューター。
   #
   # @return [Project] 新しいプロジェクトオブジェクト。
-  def initialize(name = "", description = "", parent_project = nil, base_dir = File.expand_path( '.' ), default = nil, executor = nil)
+  def initialize(name = "", description = "", parent_project = nil, base_dir = File.expand_path( '.' ), default = nil, executor = Executor.new)
     self.name             = name
     self.description      = description
     self.parent_project   = parent_project
@@ -68,14 +69,14 @@ class Yant::Project
   #
   # @return [Array<BuildListener>] レシーバに格納された全てのビルドリスナーの配列。
   def build_listeners
-    @build_listeners.dup
+    @build_listeners
   end
 
   # レシーバに格納されたフィルタセットを返します。
   #
   # @return [FilterSet] レシーバに格納されたフィルタセット。
   def global_filter_set
-    @filters.dup
+    @filters
   end
 
   # プロパティ名に対応する値を返します。
@@ -159,9 +160,12 @@ class Yant::Project
 
   # レシーバを親とする新しいプロジェクトを作成します。
   #
+  # @param [String] name         プロジェクトの名前。
+  # @param [String] description  プロジェクトの説明。
+  #
   # @return [Project]
-  def create_sub_project
-    Project.new( "", self )
+  def create_sub_project(name = "", description = "")
+    Project.new( name, description, self )
   end
 
   # レシーバに所属しているタスクを作成して返します。
