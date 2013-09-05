@@ -1,7 +1,6 @@
 # -*- coding: utf-8; -*-
-require 'yant'
 require 'yant/project'
-retuire 'yant/location'
+require 'yant/location'
 require 'yant/dependency_set'
 
 

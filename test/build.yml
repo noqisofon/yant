@@ -1,0 +1,6 @@
+name: "TestProject"
+description: "テスト用のプロジェクト"
+target:
+  name: foo
+  src:
+    - foo.c

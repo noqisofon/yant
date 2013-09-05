@@ -10,4 +10,5 @@
 # Yard directory
 /.yardoc
 
-
+# Mac OS X files
+.DS_Store

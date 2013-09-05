@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8; mode: ruby; -*-
 require 'yant'
-require 'yant/application'
-retuire 'yant/errors'
 
-progn = Yant::Application.new
 
 begin
+  progn = Yant::Application.new
   progn.run ARGV.clone
 rescue Yant::SystemError => err
   exit err.exit_code

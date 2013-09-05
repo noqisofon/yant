@@ -1,0 +1,7 @@
+# -*- coding: utf-8; mode: ruby; -*-
+
+task :hello do |hello|
+  hello.doLast do
+    puts "Hello, World!"
+  end
+end

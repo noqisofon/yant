@@ -1,7 +1,9 @@
 # -*- coding: utf-8; -*-
-require 'yant'
+require 'yaml'
+
 require 'yant/executor'
 require 'yant/filter_set'
+require 'yant/target'
 require 'yant/task'
 require 'yant/tasks/cc'
 require 'yant/tasks/copy'
@@ -32,6 +34,20 @@ class Yant::Project
   # @return [Executor] エグゼキューター。
   attr_accessor :executor
 
+  def self.with(path)
+    yantfile = File.open( File.expand_path( path ), "r" ) { |output|
+      YAML.load output
+    }
+
+    project = Yant::Project.new
+    project.name = yantfile["name"] if yantfile.has_key? "name"
+    project.description = yantfile["description"] if yantfile.has_key? "description"
+    if yantfile.has_key? "target" then
+      project.add_target Yant::Target.from( yantfile["target"] )
+    end
+    project
+  end
+
   # プロジェクトの名前、概要、親プロジェクト、ベースディレクトリなどなどを指定してプロジェクトオブジェクトを作成します。
   #
   # @param [String]                   name プロジェクトの名前。
@@ -42,7 +58,7 @@ class Yant::Project
   # @param [nil, Executor]        executor このプロジェクトを実行するためのエグゼキューター。
   #
   # @return [Project] 新しいプロジェクトオブジェクト。
-  def initialize(name = "", description = "", parent_project = nil, base_dir = File.expand_path( '.' ), default = nil, executor = Executor.new)
+  def initialize(name = "", description = "", parent_project = nil, base_dir = File.expand_path( '.' ), default = nil, executor = Yant::Executor.new)
     self.name             = name
     self.description      = description
     self.parent_project   = parent_project
@@ -52,7 +68,7 @@ class Yant::Project
 
     @targets              = {}
     @build_listeners      = []
-    @filters              = FilterSet.new
+    @filters              = Yant::FilterSet.new
 
     @sub_projects         = {}
     @properties           = {}

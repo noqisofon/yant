@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-require 'yant'
 require 'yant/project_component'
 require 'yant/target'
 
@@ -7,7 +6,7 @@ require 'yant/target'
 # 全てのタスクのための基底クラスです。
 # @abstract
 # @author ned rihine
-class Yant::Task < ProjectComponent
+class Yant::Task < Yant::ProjectComponent
   # @return [Target] タスクが持っているビルド対象。
   attr_accessor :owning_target
   # @return [String] タスクの名前。
